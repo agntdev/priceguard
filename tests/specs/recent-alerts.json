@@ -1,0 +1,20 @@
+[
+  {
+    "name": "/recent-alerts",
+    "steps": [
+      {
+        "expect": [
+          {
+            "method": "sendMessage",
+            "payload": {
+              "text": "Show owner recent alert history"
+            }
+          }
+        ],
+        "send": {
+          "text": "/recent-alerts"
+        }
+      }
+    ]
+  }
+]
