@@ -7,7 +7,7 @@
           {
             "method": "sendMessage",
             "payload": {
-              "text": "Initiate adding a new coin to the watchlist"
+              "text": "Pick a coin or type any ticker symbol:"
             }
           }
         ],

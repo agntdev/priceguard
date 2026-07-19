@@ -7,7 +7,7 @@
           {
             "method": "sendMessage",
             "payload": {
-              "text": "Access user profile settings"
+              "text": "Your settings:\n\n🌍 Timezone: UTC\n💱 Currency: USD\n🔇 Quiet hours: 23:00–07:00\n⏱ Alert cooldown: 4h\n☀️ Morning summary: not set"
             }
           }
         ],

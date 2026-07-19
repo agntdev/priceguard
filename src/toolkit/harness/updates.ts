@@ -18,7 +18,7 @@ function humanUser(id: number): User {
 
 /** bot_command entity for a leading "/cmd" so grammY's command router matches. */
 function botCommandEntities(text: string): MessageEntity[] | undefined {
-  const m = /^\/[A-Za-z0-9_]+/.exec(text);
+  const m = /^\/[A-Za-z0-9_-]+/.exec(text);
   return m ? [{ type: "bot_command", offset: 0, length: m[0].length }] : undefined;
 }
 

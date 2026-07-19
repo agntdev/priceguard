@@ -7,7 +7,7 @@
           {
             "method": "sendMessage",
             "payload": {
-              "text": "Request on-demand price check for a specific ticker or list of watchlist prices"
+              "text": "Your watchlist is empty — add some coins first."
             }
           }
         ],

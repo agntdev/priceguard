@@ -7,7 +7,7 @@
           {
             "method": "sendMessage",
             "payload": {
-              "text": "Show owner aggregated usage metrics"
+              "text": "📊 Bot metrics\n\nUsers: 0 total, 0 active (30d)\n\nTop tickers by alerts:\n  none yet\n\nAlert types:\n  none yet\n\nFailed lookups: 0"
             }
           }
         ],

@@ -7,7 +7,7 @@
           {
             "method": "sendMessage",
             "payload": {
-              "text": "Configure daily morning price summary"
+              "text": "Choose a time for your daily price summary:"
             }
           }
         ],
