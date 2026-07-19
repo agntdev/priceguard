@@ -8,7 +8,7 @@ const OWNER_ID = process.env.OWNER_ID
   ? parseInt(process.env.OWNER_ID, 10)
   : undefined;
 
-composer.command("recent-alerts", async (ctx) => {
+composer.command("recent_alerts", async (ctx) => {
   if (OWNER_ID !== undefined && ctx.from?.id !== OWNER_ID) {
     await ctx.reply("This command is restricted to the bot owner.");
     return;
