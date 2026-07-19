@@ -7,7 +7,7 @@
           {
             "method": "sendMessage",
             "payload": {
-              "text": "Show owner recent alert history"
+              "text": "No alerts have been triggered yet."
             }
           }
         ],

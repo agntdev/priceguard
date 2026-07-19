@@ -1,25 +1,59 @@
 import { Composer } from "grammy";
 import { readdirSync } from "node:fs";
 import { createBot, type BotContext } from "./toolkit/index.js";
+import { resetMetricsStore } from "./lib/metrics-store.js";
 
-// The per-chat session shape (ephemeral conversation state only). Extend as the
-// bot grows. Durable domain data must NOT live here — use the toolkit's
-// persistent storage (see AGENTS.md).
+export interface AlertRule {
+  type: "threshold" | "percentage";
+  direction: "above" | "below" | "up" | "down" | "both";
+  value: number;
+  enabled: boolean;
+  lastAlertTime?: number;
+  lastAlertPrice?: number;
+}
+
+export interface WatchlistItem {
+  ticker: string;
+  name: string;
+  alerts: AlertRule[];
+  enabled: boolean;
+  lastAlertTime?: number;
+  lastAlertPrice?: number;
+}
+
 export interface Session {
-  // example: step?: "awaiting_amount";
+  step?: string;
+  pendingTicker?: string;
+  pendingCoinName?: string;
+  pendingAlertType?: "threshold" | "percentage";
+  pendingAlertDirection?: string;
+  pendingAlertValue?: number;
+  pendingRemoveTicker?: string;
+  pendingTimezone?: string;
+  pendingCurrency?: string;
+  pendingSummaryTime?: string;
+  watchlist: WatchlistItem[];
+  timezone: string;
+  currency: string;
+  quietHoursStart: string;
+  quietHoursEnd: string;
+  summaryTime?: string;
+  cooldownHours: number;
 }
 
 export type Ctx = BotContext<Session>;
 
-/**
- * buildBot — assembles the bot, AUTO-LOADS every feature handler from
- * src/handlers/, then registers the global fallback. Does NOT start the bot.
- * Add a feature by creating src/handlers/<name>.ts that default-exports a grammY
- * Composer — NEVER edit this file (concurrent feature PRs would conflict).
- */
 export async function buildBot(token: string) {
+  resetMetricsStore();
   const bot = createBot<Session>(token, {
-    initial: () => ({}),
+    initial: () => ({
+      watchlist: [],
+      timezone: "UTC",
+      currency: "usd",
+      quietHoursStart: "23:00",
+      quietHoursEnd: "07:00",
+      cooldownHours: 4,
+    }),
   });
 
   const dir = new URL("./handlers/", import.meta.url);
@@ -34,7 +68,7 @@ export async function buildBot(token: string) {
     );
   } catch (err) {
     if ((err as NodeJS.ErrnoException).code !== "ENOENT") throw err;
-    files = []; // no handlers/ dir yet → nothing to load
+    files = [];
   }
   for (const file of files.sort()) {
     const mod = (await import(new URL(file, dir).href)) as { default?: Composer<Ctx> };
